@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import {Route} from 'react-router-dom';
 
 import './App.css';
 import SmurfForm from './components/SmurfForm';
+import DeleteSmurf from './components/DeleteSmurf'
 import Smurfs from './components/Smurfs';
+import Home from './components/Home';
+//import Smurf from './components/Smurf';
+//import { homedir } from 'os';
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +32,9 @@ class App extends Component {
   addSmurf = (data) =>{
     axios.post("http://localhost:3333/smurfs", data)
     .then(response =>{
-      this.setState({smurfs:response.data})
+      this.setState({smurfs:response.data});
+      this.props.history.push('/smurfs')
+
     })
     .catch(err => {console.log(err)})
   }
@@ -47,8 +54,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SmurfForm  addSmurf={this.addSmurf}/>
-        <Smurfs smurfs={this.state.smurfs} deleteSmurf={this.deleteSmurf}/>
+        <Route path="/delete-smurf/:id"  render={props => <DeleteSmurf props={props} deleteSmurf={this.deleteSmurf}/>} />
+        <Route path="/add-smurf"  render={props => <SmurfForm props={props} addSmurf={this.addSmurf}/>} />
+        <Route path="/smurfs"  render={props => <Smurfs props={props} smurfs={this.state.smurfs} addSmurf={this.addSmurf} deleteSmurf={this.deleteSmurf}/>} />
+        <Route exact path="/"  component={Home} />
       </div>
     );
   }
