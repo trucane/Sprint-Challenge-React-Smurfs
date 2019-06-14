@@ -1,3 +1,24 @@
+body{
+  background:powderblue;
+}
+
 .App {
   text-align: center;
+}
+
+.nav-item{
+  margin-left:20px;
+  text-decoration:none;
+  color:#53868b;
+  border:1px solid powderblue;
+  padding:10px;
+  border-radius:10px;
+  background:white;
+  font-weight:bold;
+}
+
+.add-form{
+  background:white;
+  width:500px;
+  margin:0 auto;
 }

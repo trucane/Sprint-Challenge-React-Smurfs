@@ -2,18 +2,20 @@ import React from 'react';
 
 
 
-export default class  DeleteSmurf extends React.Component{
-    constructor(props){
-        super(props)
-    }
+const DeleteSmurf = (props) => {
+    const id = props.match.params.id;
 
-    render(){
-        console.log(this.props.match.params.id)
-        return(
-            <div>
-                Hello
-               
-            </div>
-        )
-    }
+    setTimeout( () => {
+        props.deleteSmurf(id)
+    }, 2000);
+
+    return(
+        <div>
+            <p>Gargamel is eating your smurf</p>
+            <img alt="gargamel" src="https://vignette.wikia.nocookie.net/smurfsfanon/images/d/d3/Gargamel_AHS_Profile_Update.jpg/revision/latest/scale-to-width-down/250?cb=20170424144555" />
+        </div>
+    )
 }
+
+export default DeleteSmurf
+

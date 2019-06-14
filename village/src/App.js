@@ -7,7 +7,7 @@ import SmurfForm from './components/SmurfForm';
 import DeleteSmurf from './components/DeleteSmurf'
 import Smurfs from './components/Smurfs';
 import Home from './components/Home';
-//import Smurf from './components/Smurf';
+import Smurf from './components/Smurf';
 //import { homedir } from 'os';
 
 class App extends Component {
@@ -33,18 +33,17 @@ class App extends Component {
     axios.post("http://localhost:3333/smurfs", data)
     .then(response =>{
       this.setState({smurfs:response.data});
-      this.props.history.push('/smurfs')
+      this.props.history.push('/smurfs');
 
     })
     .catch(err => {console.log(err)})
   }
 
-  deleteSmurf = (e, id) =>{
-    e.preventDefault();
-    console.log(id)
+  deleteSmurf = (id) =>{
     axios.delete(`http://localhost:3333/smurfs/${id}`)
       .then(response =>{
-        this.setState({smurfs:response.data})
+        this.setState({smurfs:response.data});
+        this.props.history.push('/smurfs')
       })
       .catch(err =>{console.log(err)})
   }
@@ -56,7 +55,8 @@ class App extends Component {
       <div className="App">
         <Route path="/delete-smurf/:id"  render={props => <DeleteSmurf {...props} deleteSmurf={this.deleteSmurf}/>} />
         <Route path="/add-smurf"  render={props => <SmurfForm {...props} addSmurf={this.addSmurf}/>} />
-        <Route path="/smurfs"  render={props => <Smurfs {...props} smurfs={this.state.smurfs} addSmurf={this.addSmurf} deleteSmurf={this.deleteSmurf}/>} />
+        <Route path="/smurfs/:id"  render={props => <Smurf {...props} smurfs={this.state.smurfs} deleteSmurf={this.deleteSmurf}/>} />
+        <Route exact path="/smurfs"  render={props => <Smurfs {...props} smurfs={this.state.smurfs} addSmurf={this.addSmurf}/>} />
         <Route exact path="/"  component={Home} />
       </div>
     );
